@@ -1,5 +1,10 @@
 package cho_calander;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
@@ -37,6 +42,16 @@ public class Plan {
 		
 		System.out.println("일정이 등록되었습니다.");
 		
+		File f = new File("calander.dat");
+		String item = date + "," + Schedule;
+		try {
+			FileWriter fw = new FileWriter(f,true);
+			fw.write(item);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	 static void see_schedule(Map<String,ArrayList<String>> map){
@@ -73,6 +88,7 @@ public class Plan {
 		map.put(date, arr_schedule);
 		System.out.println("[일정 변경] 변경이 완료됐습니다.");
 		
+		
 	}
 	
 	public static void today_schedule(Map<String,ArrayList<String>> map) {
@@ -101,4 +117,6 @@ public class Plan {
 		
 		
 	}
+	
+	
 }
