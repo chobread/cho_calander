@@ -1,14 +1,15 @@
 package cho_calander;
 
-import java.io.BufferedReader;
+
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 
 
@@ -18,14 +19,10 @@ public class Plan {
 	
 	public static void add_schedule(Map<String,ArrayList<String>> map) {
 		
-		System.out.println("[일정 등록] 날짜를 입력하세요.(ex 2021-02-13)");
-		System.out.print("> ");
-		String date = scanner.next();
-		scanner.nextLine();
-		System.out.println("일정을 입력하세요.");
-		System.out.print("> ");
 		
-		String Schedule = scanner.nextLine();
+		String date = JOptionPane.showInputDialog("[일정 등록] 날짜를 입력하세요.(ex 2021-02-13)");
+	
+		String Schedule = JOptionPane.showInputDialog("일정을 입력하세요");
 		
 		ArrayList<String> arr_schedule;
 		
@@ -56,42 +53,48 @@ public class Plan {
 	}
 	 static void see_schedule(Map<String,ArrayList<String>> map){
 		
-		System.out.println("[일정 검색] 날짜를 입력하세요.");
-		System.out.print("> ");
-		
-		String date = scanner.next();
+
+		String date = JOptionPane.showInputDialog("[일정 검색] 날짜를 입력하세요.");
+		if(map.containsKey(date)) {
 		ArrayList<String> arr_schedule = map.get(date);
 		
 		for(int i = 0; i < arr_schedule.size(); i++) {
 			System.out.println(arr_schedule.get(i));
 		}
-		
+		}
+		else {
+			System.out.println(date + "에는 일정이 없습니다");
+		}
 		
 	}
 	 static void change_schedule(Map<String,ArrayList<String>> map) {
-		System.out.println("[일정 변경] 날짜를 입력하세요.");
-		System.out.print("> ");
-		String date = scanner.next();
-		
-		System.out.println("[일정 변경] 변경할 일정의 인덱스를 입력하세요.");
-		System.out.print("> ");
-		int index = scanner.nextInt();
-		
-		System.out.println("[일정 변경] 변경할 일정을 입력하세요.");
-		System.out.print("> ");
-		String Schedule = scanner.next();
+
+		String date = JOptionPane.showInputDialog("[일정 변경] 날짜를 입력하세요.");
+		if(map.containsKey(date)) {
+
+		String index = JOptionPane.showInputDialog("[일정 변경] 변경할 일정의 인덱스를 입력하세요.");
+		int int_index = Integer.parseInt(index);
+
+		String Schedule = JOptionPane.showInputDialog("[일정 변경] 변경할 일정을 입력하세요.");
 		
 		ArrayList<String> arr_schedule;
 		arr_schedule = map.get(date);
-		arr_schedule.set(index, Schedule);
+		arr_schedule.set(int_index, Schedule);
 		
 		map.put(date, arr_schedule);
 		System.out.println("[일정 변경] 변경이 완료됐습니다.");
+		}
+		
+		else {
+			System.out.println("변경할 일정이 없습니다");
+		}
 		
 		
 	}
 	
 	public static void today_schedule(Map<String,ArrayList<String>> map) {
+		
+		
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH) + 1;
@@ -108,12 +111,17 @@ public class Plan {
 		}
 		String sample_key =  sample_year + "-" + sample_month + "-" + sample_day;
 		
-		
-		ArrayList<String> arr_schedule = map.get(sample_key);
-		System.out.println("오늘의 일정입니다");
-		for(int i = 0; i < arr_schedule.size(); i++) {
-			System.out.println(arr_schedule.get(i));
+		if(map.containsKey(sample_key)) {
+			ArrayList<String> arr_schedule = map.get(sample_key);
+			System.out.println("오늘의 일정입니다");
+			for(int i = 0; i < arr_schedule.size(); i++) {
+				System.out.println(arr_schedule.get(i));
+			}
 		}
+		else {
+			System.out.println("오늘의 일정이 없습니다");
+		}
+		
 		
 		
 	}

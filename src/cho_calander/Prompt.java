@@ -1,10 +1,13 @@
 package cho_calander;
 
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 
 public class Prompt {
 	Scanner scanner = new Scanner(System.in);
@@ -13,11 +16,7 @@ public class Prompt {
 	
 	
 	
-	
-	
-	
-	public void runPrompt() {
-	
+	public void print_help() {
 		System.out.println("+----------------------+");
 		System.out.println("| 1. 일정 등록");
 		System.out.println("| 2. 일정 검색");
@@ -26,13 +25,22 @@ public class Prompt {
 		System.out.println("| 5. 오늘의 일정 보기");
 		System.out.println("| h. 도움말 q. 종료");
 		System.out.println("+----------------------+");
+	}
+	
+	
+	
+	public void runPrompt() {
+	
+		
+		print_help();
+		
 		
 		boolean flag = false;
 		
 		while(true) {
 			System.out.println("명령 (1, 2, 3, 4, 5, h, q)");
 			System.out.print("> ");
-			String input = scanner.next();
+			String input = JOptionPane.showInputDialog("명령을 입력하세요");
 			switch(input){
 				case "1":
 					Plan.add_schedule(map); break;
@@ -45,11 +53,13 @@ public class Prompt {
 				case "5":
 					Plan.today_schedule(map); break;
 				case "h":
-					System.out.println("도움말 입니다."); break;
+					print_help(); break;
 				case "q":
 					System.out.println("Bye");
 					flag = true;
-					break; 		
+					break;
+				default:
+					System.out.println("잘못된 입력입니다");
 			}
 			if(flag) {
 				break;
